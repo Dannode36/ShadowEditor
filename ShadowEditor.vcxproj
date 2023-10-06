@@ -76,11 +76,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;include\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(TargetPath)</OutputFile>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,11 +108,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;include\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(TargetPath)</OutputFile>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,7 +135,62 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ShadowEditor.cpp" />
+    <ClCompile Include="include\imgui\imgui.cpp" />
+    <ClCompile Include="include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="include\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\ShadowEditor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\GLFW\glfw3.h" />
+    <ClInclude Include="include\GLFW\glfw3native.h" />
+    <ClInclude Include="include\imgui\imconfig.h" />
+    <ClInclude Include="include\imgui\imgui.h" />
+    <ClInclude Include="include\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="include\imgui\imgui_internal.h" />
+    <ClInclude Include="include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="include\imgui\imstb_textedit.h" />
+    <ClInclude Include="include\imgui\imstb_truetype.h" />
+    <ClInclude Include="include\rapidjson\allocators.h" />
+    <ClInclude Include="include\rapidjson\document.h" />
+    <ClInclude Include="include\rapidjson\encodedstream.h" />
+    <ClInclude Include="include\rapidjson\encodings.h" />
+    <ClInclude Include="include\rapidjson\error\en.h" />
+    <ClInclude Include="include\rapidjson\error\error.h" />
+    <ClInclude Include="include\rapidjson\filereadstream.h" />
+    <ClInclude Include="include\rapidjson\filewritestream.h" />
+    <ClInclude Include="include\rapidjson\fwd.h" />
+    <ClInclude Include="include\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="include\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="include\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="include\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="include\rapidjson\internal\itoa.h" />
+    <ClInclude Include="include\rapidjson\internal\meta.h" />
+    <ClInclude Include="include\rapidjson\internal\pow10.h" />
+    <ClInclude Include="include\rapidjson\internal\regex.h" />
+    <ClInclude Include="include\rapidjson\internal\stack.h" />
+    <ClInclude Include="include\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="include\rapidjson\internal\strtod.h" />
+    <ClInclude Include="include\rapidjson\internal\swap.h" />
+    <ClInclude Include="include\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="include\rapidjson\memorybuffer.h" />
+    <ClInclude Include="include\rapidjson\memorystream.h" />
+    <ClInclude Include="include\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="include\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="include\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="include\rapidjson\pointer.h" />
+    <ClInclude Include="include\rapidjson\prettywriter.h" />
+    <ClInclude Include="include\rapidjson\rapidjson.h" />
+    <ClInclude Include="include\rapidjson\reader.h" />
+    <ClInclude Include="include\rapidjson\schema.h" />
+    <ClInclude Include="include\rapidjson\stream.h" />
+    <ClInclude Include="include\rapidjson\stringbuffer.h" />
+    <ClInclude Include="include\rapidjson\writer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
