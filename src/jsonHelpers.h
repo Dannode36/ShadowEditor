@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <streambuf>
@@ -5,13 +6,8 @@
 #include "rapidjson/reader.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
-#include <windows.h>
-#include <tchar.h>
-#include "Application.h"
+#include "rapidjson/error/en.h"
+using namespace rapidjson;
 
-// Main code
-int main(int, char**)
-{
-    Application app;
-    return app.Run();
-}
+bool readJson(rapidjson::Document& doc, std::string filepath);
+
