@@ -9,7 +9,7 @@ wchar_t* convertCharArrayToLPCWSTR(const char* charArray)
     return wString;
 }
 
-std::string openFile(const char* filter)
+std::string openFileDialog()
 {
     OPENFILENAME ofn = { 0 };
     TCHAR szFile[260] = { 0 };
@@ -18,7 +18,7 @@ std::string openFile(const char* filter)
     ofn.hwndOwner = HWND();
     ofn.lpstrFile = szFile;
     ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = _T("City File (*.cit)\0*.cit\0");//convertCharArrayToLPCWSTR(filter);
+    ofn.lpstrFilter = _T("City File (*.cit)\0*.cit\0Text File (*.txt)\0*.txt\0");//convertCharArrayToLPCWSTR(filter);
     ofn.nFilterIndex = 1;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;

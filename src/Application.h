@@ -26,9 +26,12 @@ private:
 	const char* glsl_version;
 	GLFWwindow* window;
 
+	std::string filePath{};
 	Document doc;
-
+	
 	//State
+	bool documentLoaded = false;
+
 	bool show_demo_window = true;
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);

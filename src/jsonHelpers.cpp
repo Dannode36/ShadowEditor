@@ -1,7 +1,8 @@
 #include "jsonHelpers.h"
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
 
 bool readJson(rapidjson::Document& doc, std::string filepath) {
-#undef GetObject
     static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
 
     std::ifstream file(filepath);
@@ -15,27 +16,24 @@ bool readJson(rapidjson::Document& doc, std::string filepath) {
             GetParseError_En(doc.GetParseError()));
         return false;
     }
+
     std::cout << sizeof(doc) << "\n";
     for (auto& m : doc.GetObject()) {
-        std::cout << "Type of member" << m.name.GetString() << "is" << kTypeNames[m.value.GetType()];
+        std::cout << "Type of member " << m.name.GetString() << " is " << kTypeNames[m.value.GetType()];
         if (m.value.IsArray()) {
             std::cout << " of size " << m.value.Size();
         }
         std::cout << "\n";
-
-        //if (m.name == "streets") {
-        //    const Value& streets = m.value;
-        //    for (SizeType i = 0; i < streets.Size(); i++) {// Uses SizeType instead of size_t
-        //        cout << "\t" << streets[i]["name"].GetString() << "\n";
-        //    }
-        //}
-        //else if (m.name == "citizens") {
-        //    const Value& citizens = m.value;
-        //    for (SizeType i = 0; i < citizens.Size(); i++) {// Uses SizeType instead of size_t
-        //        cout << "\t" << citizens[i]["citizenName"].GetString() << "\n";
-        //    }
-        //}
     }
 
+    return true;
+}
+bool writeJson(rapidjson::Document& doc, std::string filepath) {
+    StringBuffer buffer;
+    Writer<StringBuffer> writer(buffer);
+    doc.Accept(writer);
+
+    std::ofstream myfile(filepath);
+    myfile << buffer.GetString();
     return true;
 }
