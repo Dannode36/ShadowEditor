@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ImGuiJson\jsonRendering.cpp" />
     <ClCompile Include="src\jsonHelpers.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="src\win32Dialogs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ImGuiJson\jsonRendering.h" />
     <ClInclude Include="src\jsonHelpers.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="include\GLFW\glfw3.h" />

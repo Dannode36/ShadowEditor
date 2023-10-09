@@ -22,7 +22,7 @@ int Application::Run()
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 
     // Create window with graphics context
-    window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+    window = glfwCreateWindow(1280, 720, "Shadow Editor", nullptr, nullptr);
     if (window == nullptr) {
         return 1;
     }

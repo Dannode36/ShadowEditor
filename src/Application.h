@@ -23,7 +23,7 @@ private:
 
 	void ImGuiToolbar();
 private:
-	const char* glsl_version;
+	const char* glsl_version = "I<3Austin";
 	GLFWwindow* window;
 
 	std::string filePath{};
