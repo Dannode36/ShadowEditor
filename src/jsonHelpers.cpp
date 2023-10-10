@@ -2,8 +2,9 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
+
 bool readJson(rapidjson::Document& doc, std::string filepath) {
-    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
 
     std::ifstream file(filepath);
     std::string json((std::istreambuf_iterator<char>(file)),

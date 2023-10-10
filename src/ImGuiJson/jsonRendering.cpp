@@ -44,7 +44,7 @@ void jsonDragFloatA(const char* label, rapidjson::Value* jsonValue, float* imgui
 
 void jsonInputTextA(const char* label, rapidjson::Value* jsonValue, char** imguiArray) {
 	if (jsonValue->Empty()) { return; }
-	assert(jsonValue[0].IsFloat());
+	assert(jsonValue[0].IsString());
 	for (rapidjson::SizeType i = 0; i < jsonValue->Size(); i++)
 	{
 		std::string elemLabel(label);

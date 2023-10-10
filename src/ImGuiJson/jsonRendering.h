@@ -6,3 +6,5 @@ void jsonDragFloat(const char* label, rapidjson::Value* jsonValue, float* imguiV
 void jsonInputText(const char* label, rapidjson::Value* jsonValue, char* imguiValue);
 
 void jsonDragIntA(const char* label, rapidjson::Value* jsonValue, int* imguiArray);
+void jsonDragFloatA(const char* label, rapidjson::Value* jsonValue, float* imguiArray);
+void jsonInputTextA(const char* label, rapidjson::Value* jsonValue, char** imguiArray);

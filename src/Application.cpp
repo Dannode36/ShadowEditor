@@ -38,6 +38,7 @@ int Application::Run()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+    io.ConfigDragClickToInputText = true;
     //io.ConfigViewportsNoAutoMerge = true;
     //io.ConfigViewportsNoTaskBarIcon = true;
 
@@ -113,8 +114,8 @@ void Application::Update()
         ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
         if (documentLoaded) {
-            static int citySizeX = rapidjson::Pointer("/citySize/x").Get(doc)->GetInt();
-            if (ImGui::SliderInt("X", &citySizeX, 1, 100)) {
+            static float citySizeX = rapidjson::Pointer("/citySize/x").Get(doc)->GetFloat();
+            if (ImGui::DragFloat("X", &citySizeX, 0.1f, 0.1f, 100.0f, "%.1f")) {
                 rapidjson::Pointer("/citySize/x").Set(doc, (float)citySizeX);
             }
         }
