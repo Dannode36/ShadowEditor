@@ -1,6 +1,7 @@
 #include "win32Dialogs.h"
 #include <windows.h>
 #include <tchar.h>
+#define WIN32_LEAN_AND_MEAN
 
 wchar_t* convertCharArrayToLPCWSTR(const char* charArray)
 {

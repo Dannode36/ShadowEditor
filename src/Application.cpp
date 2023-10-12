@@ -115,9 +115,12 @@ void Application::Update()
 
         if (documentLoaded) {
             static float citySizeX = rapidjson::Pointer("/citySize/x").Get(doc)->GetFloat();
-            if (ImGui::DragFloat("X", &citySizeX, 0.1f, 0.1f, 100.0f, "%.1f")) {
+            /*if (ImGui::DragFloat("X", &citySizeX, 0.1f, 0.1f, 100.0f, "%.1f")) {
                 rapidjson::Pointer("/citySize/x").Set(doc, (float)citySizeX);
             }
+            if (ImGui::DragFloat("X", rapidjson::Pointer("/citySize/x").Get, 0.1f, 0.1f, 100.0f, "%.1f")) {
+                /rapidjson::Pointer("/citySize/x").Set(doc, (float)citySizeX);
+            }*/
         }
 
         if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)

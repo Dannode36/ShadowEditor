@@ -1,17 +1,17 @@
 #pragma once
+#include <string>
+#include <stdio.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include <stdio.h>
+#define IMGUI_INCLUDE_IMGUI_USER_INL
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
-#include <string>
 #include "jsonHelpers.h"
-#define WIN32_LEAN_AND_MEAN
 
 class Application
 {
