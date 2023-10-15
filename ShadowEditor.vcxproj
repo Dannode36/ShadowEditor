@@ -141,8 +141,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\ImGuiJson\imgui_user.cpp" />
-    <ClCompile Include="SaveFileData.cpp" />
     <ClCompile Include="src\ImGuiJson\jsonRendering.cpp" />
     <ClCompile Include="src\jsonHelpers.cpp" />
     <ClCompile Include="src\Application.cpp" />
@@ -157,8 +155,7 @@
     <ClCompile Include="src\win32Dialogs.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ImGuiJson\imgui_user.h" />
-    <ClInclude Include="SaveFileData.h" />
+    <ClInclude Include="src\ImGuiJson\CityData.h" />
     <ClInclude Include="src\ImGuiJson\jsonRendering.h" />
     <ClInclude Include="src\jsonHelpers.h" />
     <ClInclude Include="src\Application.h" />
@@ -209,6 +206,7 @@
     <ClInclude Include="include\rapidjson\stringbuffer.h" />
     <ClInclude Include="include\rapidjson\writer.h" />
     <ClInclude Include="src\win32Dialogs.h" />
+    <ClInclude Include="src\ImGuiJson\ValuePair.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

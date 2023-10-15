@@ -51,12 +51,6 @@
     <ClCompile Include="src\ImGuiJson\jsonRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SaveFileData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ImGuiJson\imgui_user.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h">
@@ -209,10 +203,10 @@
     <ClInclude Include="src\ImGuiJson\jsonRendering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SaveFileData.h">
+    <ClInclude Include="src\ImGuiJson\CityData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGuiJson\imgui_user.h">
+    <ClInclude Include="src\ImGuiJson\ValuePair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
