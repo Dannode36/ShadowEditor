@@ -3,6 +3,7 @@
 #include <vector>
 #include "imgui.h"
 #include "ValuePair.h"
+#include "Citizen.h"
 
 struct Meta {
 
@@ -16,14 +17,7 @@ struct MultiPage {
 
 };
 
-struct Citizen {
-	ValuePair<int> humanID;
-	ValuePair<int> home;
-	ValuePair<int> job;
-	ValuePair<std::string> birthday;
-	ValuePair<float> societalClass;
 
-};
 
 struct Criminal {
 
@@ -63,7 +57,14 @@ struct District {
 };
 
 struct CityTile {
-
+	ValuePair<std::string> name;
+	ValuePair<int> blockID;
+	ValuePair<int> districtID;
+	ValuePair<ImVec2> cityCoord;
+	//ValuePair<Building> building;
+	//ValuePair<std::vector<Tile>> outsideTiles;
+	ValuePair<float> density;
+	ValuePair<float> landValue;
 };
 
 struct City
@@ -75,11 +76,13 @@ struct City
 	ValuePair<std::vector<District>> districts;
 	ValuePair<std::vector<Street>> streets;
 	ValuePair<std::vector<CityTile>> cityTiles;
-	ValuePair<std::vector<Citizen>> cityTiles;
+	ValuePair<std::vector<Citizen>> citizens;
 	ValuePair<std::vector<Interactable>> interactables;
 	ValuePair<std::vector<Group>> groups;
 	ValuePair<std::vector<Pipe>> pipes;
 	ValuePair<std::vector<Criminal>> criminals;
 	ValuePair<std::vector<MultiPage>> multiPage;
 	ValuePair<std::vector<Meta>> metas;
+
+	inline void LoadCitizens(rapidjson::Document& doc);
 };

@@ -5,6 +5,6 @@ template <typename T>
 struct ValuePair
 {
 	T value;
-	rapidjson::Value* jsonValue
+	rapidjson::Value* jsonValue;
 };
 

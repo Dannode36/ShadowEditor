@@ -10,8 +10,8 @@
 #include <GLES2/gl2.h>
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
-
 #include "jsonHelpers.h"
+#include "ImGuiJson/CityData.h"
 
 class Application
 {
@@ -22,13 +22,15 @@ private:
 	void Shutdown();
 
 	void ImGuiToolbar();
+	void RenderDocument();
 private:
 	const char* glsl_version = "I<3Austin";
 	GLFWwindow* window;
 
 	std::string filePath{};
 	Document doc;
-	
+	City city;
+
 	//State
 	bool documentLoaded = false;
 
