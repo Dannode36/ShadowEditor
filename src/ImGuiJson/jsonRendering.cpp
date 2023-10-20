@@ -2,21 +2,23 @@
 #include "../Application.h"
 #include <string>
 #include "imgui.h"
+#include "imgui/misc/cpp/imgui_stdlib.h"
 
 //Base Types
-void jsonDragInt(const char* label, rapidjson::Value* jsonValue, int* imguiValue) {
-	if (ImGui::DragInt(label, imguiValue)) {
-		jsonValue->SetInt(*imguiValue);
+inline void jsonDragInt(const char* label, ValuePair<int>& pair) {
+	if (ImGui::DragInt(label, &pair.value)) {
+		pair.jsonValue->SetInt(pair.value);
 	}
 }
+
 void jsonDragFloat(const char* label, rapidjson::Value* jsonValue, float* imguiValue) {
 	if (ImGui::DragFloat(label, imguiValue)) {
 		jsonValue->SetFloat(*imguiValue);
 	}
 }
-void jsonInputText(const char* label, rapidjson::Value* jsonValue, char* buf) {
-	if (ImGui::InputText(label, buf, strlen(buf))) {
-		jsonValue->SetString(buf, strlen(buf));
+void jsonInputText(const char* label, ValuePair<std::string>& pair) {
+	if (ImGui::InputText(label, &pair.value)) {
+		pair.jsonValue->SetString(pair.value.c_str(), pair.value.length());
 	}
 }
 void jsonCheckbox(const char* label, rapidjson::Value* jsonValue, bool* v) {
@@ -58,25 +60,17 @@ void jsonInputTextA(const char* label, rapidjson::Value* jsonValue, char** imgui
 	}
 }
 
+void StreetUI(Street& street) {
+	jsonInputText((street.name.value + "_name").c_str(), street.name);
+	jsonDragInt((street.name.value + "_residenceNum").c_str(), street.residenceNumber);
+}
+
 void Application::RenderDocument() {
-	for (auto& m : doc.GetObject())
-	{
-		
+	if (ImGui::BeginChild("Streets")) {
+		for (auto& street : city.streets.value)
+		{
+			StreetUI(street);
+		}
 	}
-}
-
-void RenderObject(rapidjson::Value& value) {
-	for (auto& m : value.GetObject())
-	{
-		RenderValue(m.value, m.name.GetString());
-	}
-}
-
-void RenderValue(rapidjson::Value& value, const char* name = "") {
-	if (value.IsInt()) {
-		jsonDragInt(name, &value, nullptr);
-	}
-	if (value.IsBool()) {
-		jsonCheckbox(name, &value, nullptr);
-	}
+	ImGui::EndChild();
 }

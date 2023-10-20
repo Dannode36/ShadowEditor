@@ -22,7 +22,7 @@ inline void City::LoadCitizens(rapidjson::Document& doc) {
 		citizens.value[i].emotionality;
 		citizens.value[i].extraversion;
 		citizens.value[i].favCol;*/
-		citizens.value[i].citizenName.jsonValue = citizenJson->GetArray()[i].GetObject()[""];
+		//citizens.value[i].citizenName.jsonValue = citizenJson->GetArray()[i].GetObject()[""];
 		citizens.value[i].casualName;
 		citizens.value[i].firstName;
 		citizens.value[i].surName;

@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\imgui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="src\ImGuiJson\CityData.cpp" />
     <ClCompile Include="src\ImGuiJson\jsonRendering.cpp" />
     <ClCompile Include="src\jsonHelpers.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="src\win32Dialogs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\imgui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="src\ImGuiJson\Citizen.h" />
     <ClInclude Include="src\ImGuiJson\CityData.h" />
     <ClInclude Include="src\ImGuiJson\jsonRendering.h" />
