@@ -1,6 +1,5 @@
 #include "jsonRendering.h"
 #include "../Application.h"
-#include <string>
 #include "imgui.h"
 #include "imgui/misc/cpp/imgui_stdlib.h"
 
@@ -10,67 +9,67 @@ inline void jsonDragInt(const char* label, ValuePair<int>& pair) {
 		pair.jsonValue->SetInt(pair.value);
 	}
 }
-
-void jsonDragFloat(const char* label, rapidjson::Value* jsonValue, float* imguiValue) {
-	if (ImGui::DragFloat(label, imguiValue)) {
-		jsonValue->SetFloat(*imguiValue);
+inline void jsonDragFloat(const char* label, ValuePair<float>& pair) {
+	if (ImGui::DragFloat(label, &pair.value)) {
+		pair.jsonValue->SetFloat(pair.value);
 	}
 }
-void jsonInputText(const char* label, ValuePair<std::string>& pair) {
+inline void jsonInputText(const char* label, ValuePair<std::string>& pair) {
 	if (ImGui::InputText(label, &pair.value)) {
 		pair.jsonValue->SetString(pair.value.c_str(), pair.value.length());
 	}
 }
-void jsonCheckbox(const char* label, rapidjson::Value* jsonValue, bool* v) {
-	if (ImGui::Checkbox(label, v)) {
-		jsonValue->SetBool(v);
+inline void jsonCheckbox(const char* label, ValuePair<bool>& pair) {
+	if (ImGui::Checkbox(label, &pair.value)) {
+		pair.jsonValue->SetBool(pair.value);
 	}
 }
-//Array Types
-void jsonDragIntA(const char* label, rapidjson::Value* jsonValue, int* imguiArray) {
-	if (jsonValue->Empty()) { return; }
-	assert(jsonValue[0].IsInt());
-	for (rapidjson::SizeType i = 0; i < jsonValue->Size(); i++)
+
+inline void Application::StreetUI(std::vector<Street>& streets) {
+	if (!ImGui::CollapsingHeader("Streets"))
+		return;
+
+	for (auto& street : streets)
 	{
-		std::string elemLabel(label);
-		elemLabel += std::to_string(i);
-		jsonDragInt(elemLabel.c_str(), &jsonValue[i], &imguiArray[i]);
-	}
-}
-
-void jsonDragFloatA(const char* label, rapidjson::Value* jsonValue, float* imguiArray) {
-	if (jsonValue->Empty()) { return; }
-	assert(jsonValue[0].IsFloat());
-	for (rapidjson::SizeType i = 0; i < jsonValue->Size(); i++)
-	{
-		std::string elemLabel(label);
-		elemLabel += std::to_string(i);
-		jsonDragFloat(elemLabel.c_str(), &jsonValue[i], &imguiArray[i]);
-	}
-}
-
-void jsonInputTextA(const char* label, rapidjson::Value* jsonValue, char** imguiArray) {
-	if (jsonValue->Empty()) { return; }
-	assert(jsonValue[0].IsString());
-	for (rapidjson::SizeType i = 0; i < jsonValue->Size(); i++)
-	{
-		std::string elemLabel(label);
-		elemLabel += std::to_string(i);
-		jsonInputText(elemLabel.c_str(), &jsonValue[i], imguiArray[i]);
-	}
-}
-
-void StreetUI(Street& street) {
-	jsonInputText((street.name.value + "_name").c_str(), street.name);
-	jsonDragInt((street.name.value + "_residenceNum").c_str(), street.residenceNumber);
-}
-
-void Application::RenderDocument() {
-	if (ImGui::BeginChild("Streets")) {
-		for (auto& street : city.streets.value)
-		{
-			StreetUI(street);
+		if (ImGui::BeginChild(street.name.value.c_str())) {
+			jsonInputText((street.name.value + "_name").c_str(), street.name);
+			jsonDragInt((street.name.value + "_residenceNum").c_str(), street.residenceNumber);
+			unsaved_document = true;
 		}
+		ImGui::EndChild();
 	}
-	ImGui::EndChild();
+}
+
+inline void Application::DistrictUI(std::vector<District>& districts) {
+	if (!ImGui::CollapsingHeader("Districts"))
+		return;
+
+	for (auto& district : districts)
+	{
+		if (ImGui::BeginChild("Districts")) {
+			jsonInputText((district.name.value + "_name").c_str(), district.name);
+			//jsonDragInt((district.name.value + "_residenceNum").c_str(), district.residenceNumber);
+			unsaved_document = true;
+		}
+		ImGui::EndChild();
+	}
+}
+
+void Application::RenderDocument(bool* p_open) {
+	ImGuiWindowFlags window_flags = 0;
+	if (unsaved_document)   window_flags |= ImGuiWindowFlags_UnsavedDocument;
+
+	ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("JSON Editor", p_open, window_flags))
+	{
+		// Early out if the window is collapsed, as an optimization.
+		ImGui::End();
+		return;
+	}
+
+	DistrictUI(city.districts.value);
+	StreetUI(city.streets.value);
+
+	ImGui::End();
 }

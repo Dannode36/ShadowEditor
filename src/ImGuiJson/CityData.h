@@ -54,6 +54,8 @@ struct District {
 	ValuePair<std::vector<Block>> blocks;
 	ValuePair<float> averageLandValue;
 	ValuePair<std::vector<ImVec2>> dominantEthnicities;
+
+	District() = default;
 };
 
 struct CityTile {

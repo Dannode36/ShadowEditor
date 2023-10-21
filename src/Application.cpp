@@ -18,6 +18,7 @@ int Application::Run()
     glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    //glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); //TODO: Custom title bar ;)
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 
@@ -95,6 +96,9 @@ void Application::Update()
     ImGui::NewFrame();
 
     ImGuiToolbar();
+    if (documentLoaded) {
+        RenderDocument(&showJsonEditorWindow);
+    }
 
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
     if (show_demo_window)
@@ -165,6 +169,50 @@ void Application::Update()
     glfwSwapBuffers(window);
 }
 
+bool Application::LoadDocument(std::string path) {
+    if (!readJson(doc, path)) {
+        return false;
+    }
+
+    {   //Load Disrtricts
+        std::string pointerSource = "/streets";
+        auto ptr = rapidjson::Pointer(pointerSource.c_str());
+        city.streets.jsonValue = ptr.Get(doc);
+        city.streets.value.resize(city.streets.jsonValue->Size());
+
+        for (SizeType i = 0; i < city.streets.jsonValue->Size(); i++) {
+            std::string streetSource = pointerSource + "/" + std::to_string(i);
+            auto jsonStreet = rapidjson::Pointer(streetSource.c_str());
+            auto& street = city.streets.value[i];
+
+            street.name.jsonValue = rapidjson::Pointer((streetSource + "/name").c_str()).Get(doc);
+            street.name.value = street.name.jsonValue->GetString();
+
+            street.residenceNumber.jsonValue = rapidjson::Pointer((streetSource + "/residenceNumber").c_str()).Get(doc);
+            street.residenceNumber.value = street.residenceNumber.jsonValue->GetInt();
+        }
+        return true;
+    }
+
+    //{   //Load Streets
+    //    auto ptr = rapidjson::Pointer("/districts");
+    //    city.districts.jsonValue = ptr.Get(doc);
+    //    city.districts.value.resize(city.districts.jsonValue->Size());
+
+    //    for (SizeType i = 0; i < city.districts.jsonValue->Size(); i++) {
+    //        auto jsonDistrict = ptr.Append(("/" + std::to_string(i)).c_str());
+    //        auto& district = city.districts.value[i];
+
+    //        district.name.jsonValue = jsonDistrict.Append("name").Get(doc);
+    //        district.name.value = district.name.jsonValue->GetString();
+
+    //        district.preset.jsonValue = jsonDistrict.Append("preset").Get(doc);
+    //        district.preset.value = district.preset.jsonValue->GetString();
+    //    }
+    //    return true;
+    //}
+}
+
 void Application::ImGuiToolbar() {
     const char* menuAction = "";
     if (ImGui::BeginMainMenuBar()) {
@@ -190,14 +238,17 @@ void Application::ImGuiToolbar() {
     }
     else if (menuAction == "open") {
         filePath = openFileDialog();
-        if (readJson(doc, filePath)) {
-            documentLoaded = true;
-        }
+        documentLoaded = LoadDocument(filePath);
     }
     else if (menuAction == "save") {
         if (documentLoaded) {
-            writeJson(doc, filePath);
-            printf("Saved file at %s", filePath.c_str());
+            if (writeJson(doc, filePath)) {
+                printf("Saved file at %s", filePath.c_str());
+                unsaved_document = false;
+            }
+            else {
+                printf("ERROR: Could not save file at %s", filePath.c_str());
+            }
         }
     }
 }
