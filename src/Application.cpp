@@ -94,6 +94,7 @@ void Application::Update()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+    ImGui::DockSpaceOverViewport();
 
     ImGuiToolbar();
     if (documentLoaded) {
@@ -174,7 +175,7 @@ bool Application::LoadDocument(std::string path) {
         return false;
     }
 
-    {   //Load Disrtricts
+    {   //Load Streets
         std::string pointerSource = "/streets";
         auto ptr = rapidjson::Pointer(pointerSource.c_str());
         city.streets.jsonValue = ptr.Get(doc);
@@ -191,26 +192,27 @@ bool Application::LoadDocument(std::string path) {
             street.residenceNumber.jsonValue = rapidjson::Pointer((streetSource + "/residenceNumber").c_str()).Get(doc);
             street.residenceNumber.value = street.residenceNumber.jsonValue->GetInt();
         }
-        return true;
     }
 
-    //{   //Load Streets
-    //    auto ptr = rapidjson::Pointer("/districts");
-    //    city.districts.jsonValue = ptr.Get(doc);
-    //    city.districts.value.resize(city.districts.jsonValue->Size());
+    {   //Load Disrtricts
+        std::string pointerSource = "/districts";
+        auto ptr = rapidjson::Pointer(pointerSource.c_str());
+        city.districts.jsonValue = ptr.Get(doc);
+        city.districts.value.resize(city.districts.jsonValue->Size());
 
-    //    for (SizeType i = 0; i < city.districts.jsonValue->Size(); i++) {
-    //        auto jsonDistrict = ptr.Append(("/" + std::to_string(i)).c_str());
-    //        auto& district = city.districts.value[i];
+        for (SizeType i = 0; i < city.districts.jsonValue->Size(); i++) {
+            std::string streetSource = pointerSource + "/" + std::to_string(i);
+            auto jsonDistrict = rapidjson::Pointer(streetSource.c_str());
+            auto& district = city.districts.value[i];
 
-    //        district.name.jsonValue = jsonDistrict.Append("name").Get(doc);
-    //        district.name.value = district.name.jsonValue->GetString();
+            district.name.jsonValue = rapidjson::Pointer((streetSource + "/name").c_str()).Get(doc);
+            district.name.value = district.name.jsonValue->GetString();
 
-    //        district.preset.jsonValue = jsonDistrict.Append("preset").Get(doc);
-    //        district.preset.value = district.preset.jsonValue->GetString();
-    //    }
-    //    return true;
-    //}
+            district.preset.jsonValue = rapidjson::Pointer((streetSource + "/preset").c_str()).Get(doc);
+            district.preset.value = district.preset.jsonValue->GetString();
+        }
+    }
+    return true;
 }
 
 void Application::ImGuiToolbar() {
@@ -242,13 +244,13 @@ void Application::ImGuiToolbar() {
     }
     else if (menuAction == "save") {
         if (documentLoaded) {
-            if (writeJson(doc, filePath)) {
+            /*if (writeJson(doc, filePath)) {
                 printf("Saved file at %s", filePath.c_str());
                 unsaved_document = false;
             }
             else {
                 printf("ERROR: Could not save file at %s", filePath.c_str());
-            }
+            }*/
         }
     }
 }

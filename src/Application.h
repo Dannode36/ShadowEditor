@@ -13,8 +13,8 @@
 #include "jsonHelpers.h"
 #include "ImGuiJson/CityData.h"
 
-#define SOD_VERSION_MAJOR
-#define SOD_VERSION_MINOR
+#define SOD_VERSION_MAJOR 33
+#define SOD_VERSION_MINOR 7
 
 class Application
 {
