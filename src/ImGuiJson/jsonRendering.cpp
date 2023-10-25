@@ -5,6 +5,7 @@
 
 //Base Types
 inline void jsonDragInt(const char* label, ValuePair<int>& pair) {
+	ImGui::SetNextItemWidth(100.f);
 	if (ImGui::DragInt(label, &pair.value)) {
 		pair.jsonValue->SetInt(pair.value);
 	}
@@ -15,7 +16,8 @@ inline void jsonDragFloat(const char* label, ValuePair<float>& pair) {
 	}
 }
 inline void jsonInputText(const char* label, ValuePair<std::string>& pair) {
-	if (ImGui::InputText(label, &pair.value)) {
+	ImGui::SetNextItemWidth(500.f);
+	if (ImGui::InputText(label, &pair.value, ImGuiInputTextFlags_EnterReturnsTrue)) {
 		pair.jsonValue->SetString(pair.value.c_str(), pair.value.length());
 	}
 }
@@ -32,13 +34,16 @@ inline void Application::StreetUI(std::vector<Street>& streets) {
 	int i = 0;
 	for (auto& street : streets)
 	{
-		ImGui::Text("Name"); ImGui::SameLine();
-		jsonInputText(("##street_name_" + std::to_string(i)).c_str(), street.name);
+		if (ImGui::TreeNode((street.name.value + "###" + std::to_string(i)).c_str())) {
+			ImGui::Text("Name"); ImGui::SameLine();
+			jsonInputText(("##street_name_" + std::to_string(i)).c_str(), street.name);
 
-		ImGui::Text("Residence Number"); ImGui::SameLine();
-		jsonDragInt(("##street_residenceNum_" + std::to_string(i)).c_str(), street.residenceNumber);
+			ImGui::Text("Residence Number"); ImGui::SameLine();
+			jsonDragInt(("##street_residenceNum_" + std::to_string(i)).c_str(), street.residenceNumber);
 
-		ImGui::Separator();
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 		i++;
 	}
 }
@@ -50,13 +55,16 @@ inline void Application::DistrictUI(std::vector<District>& districts) {
 	int i = 0;
 	for (auto& district : districts)
 	{
-		ImGui::Text("Name"); ImGui::SameLine();
-		jsonInputText(("##district_name_" + std::to_string(i)).c_str(), district.name);
+		if (ImGui::TreeNode((district.name.value + "###" + std::to_string(i)).c_str())) {
+			ImGui::Text("Name"); ImGui::SameLine();
+			jsonInputText(("##district_name_" + std::to_string(i)).c_str(), district.name);
 
-		ImGui::Text("Preset"); ImGui::SameLine();
-		jsonInputText(("##district_preset_" + std::to_string(i)).c_str(), district.preset);
+			ImGui::Text("Preset"); ImGui::SameLine();
+			jsonInputText(("##district_preset_" + std::to_string(i)).c_str(), district.preset);
 
-		ImGui::Separator();
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 		i++;
 	}
 }
@@ -67,7 +75,7 @@ void Application::RenderDocument(bool* p_open) {
 
 	ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("JSON Editor", p_open, window_flags))
+	if (!ImGui::Begin(filePath.c_str(), p_open, window_flags))
 	{
 		// Early out if the window is collapsed, as an optimization.
 		ImGui::End();

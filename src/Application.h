@@ -15,6 +15,7 @@
 
 #define SOD_VERSION_MAJOR 33
 #define SOD_VERSION_MINOR 7
+#define DBG_SAVING true
 
 class Application
 {

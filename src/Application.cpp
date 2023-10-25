@@ -243,14 +243,21 @@ void Application::ImGuiToolbar() {
         documentLoaded = LoadDocument(filePath);
     }
     else if (menuAction == "save") {
-        if (documentLoaded) {
-            /*if (writeJson(doc, filePath)) {
+        if (documentLoaded && DBG_SAVING) {
+            if (writeJson(doc, filePath)) {
                 printf("Saved file at %s", filePath.c_str());
                 unsaved_document = false;
             }
             else {
-                printf("ERROR: Could not save file at %s", filePath.c_str());
-            }*/
+                printf("ERROR: Could not save file at %s\n", filePath.c_str());
+            }
+        }
+        else if (!DBG_SAVING) {
+            printf("DEBUG: File saving disabled\n");
+        }
+        else
+        {
+            printf("ERROR: No document loaded\n");
         }
     }
 }
