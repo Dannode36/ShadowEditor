@@ -20,30 +20,30 @@
 class Application
 {
 public:
-	int Run();
+    int Run();
 private:
-	void Update();
-	void Shutdown();
-	bool LoadDocument(std::string path);
+    void Update();
+    void Shutdown();
+    bool LoadDocument(std::string path);
 
-	void ImGuiToolbar();
-	void RenderDocument(bool* isOpen);
-	inline void StreetUI(std::vector<Street>& streets);
-	inline void DistrictUI(std::vector<District>& districts);
+    void ImGuiToolbar();
+    void RenderDocument(bool* isOpen);
+    inline void StreetUI(std::vector<Street>& streets);
+    inline void DistrictUI(std::vector<District>& districts);
 private:
-	const char* glsl_version = "I<3Austin";
-	GLFWwindow* window;
+    const char* glsl_version = "I<3Austin";
+    GLFWwindow* window;
 
-	std::string filePath{};
-	Document doc;
-	City city;
+    std::string filePath{};
+    Document doc;
+    City city;
 
-	//State
-	bool documentLoaded = false;
-	bool unsaved_document = true;
+    //State
+    bool documentLoaded = false;
+    bool unsaved_document = true;
 
-	bool showJsonEditorWindow = true;
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    bool showJsonEditorWindow = true;
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 };

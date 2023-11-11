@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\imgui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="src\ImGuiJson\SoDStructures.h" />
     <ClInclude Include="src\ImGuiJson\Citizen.h" />
     <ClInclude Include="src\ImGuiJson\CityData.h" />
     <ClInclude Include="src\ImGuiJson\jsonRendering.h" />

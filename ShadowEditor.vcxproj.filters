@@ -221,5 +221,8 @@
     <ClInclude Include="include\imgui\misc\cpp\imgui_stdlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ImGuiJson\SoDStructures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

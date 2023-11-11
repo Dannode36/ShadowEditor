@@ -399,3 +399,5 @@ FodyWeavers.xsd
 example.cit
 example.txt
 example pretty.cit
+*.exe
+example_pretty.cit
