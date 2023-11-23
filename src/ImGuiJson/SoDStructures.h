@@ -23,7 +23,7 @@ struct Block {
     float averageDensity;
     float averageLandValue;
 };
-struct MyClass3 {
+struct Ethnicity {
     int ethnicity;
     int frequency;
 };
@@ -33,10 +33,9 @@ struct District {
     int districtID;
     std::vector<Block> blocks;
     float averageLandValue;
-    std::vector<MyClass3> dominantEthnicities;
+    std::vector<Ethnicity> dominantEthnicities;
 };
-
-struct MyClass6 {
+struct RoomNode {
     Vector2 fc;
     Vector2 ltc;
     Tile nc;
@@ -91,29 +90,22 @@ struct Object {
     Tile scale;
     MaterialKey matKey;
     MaterialKey artMatKet;
-    std::vector<void*> owners;
+    std::vector<int> owners;
 };
-struct MyClass12 {
+struct ObjectCluster {
     std::string cluster;
     Tile anchorNode;
     int angle;
     float ranking;
     std::vector<Object> objs;
 };
-struct MyClass13 {
-    std::vector<void*> digits;
-    int type;
-    int id;
-    bool used;
-    std::vector<void*> notes;
-};
-struct MyClass14 {
+struct CullTreeNode {
     int r;
     std::vector<void*> d;
 };
 struct Room {
     std::string name;
-    std::vector<MyClass6> nodes;
+    std::vector<RoomNode> nodes;
     std::vector<void*> openPlanElements;
     std::vector<LightZone> lightZones;
     std::vector<void*> commonRooms;
@@ -136,12 +128,12 @@ struct Room {
     std::string mainLightPreset;
     bool isBaseNullRoom;
     Tile middle;
-    std::vector<MyClass12> f;
-    std::vector<void*> owners;
+    std::vector<ObjectCluster> f;
+    std::vector<int> owners;
     std::vector<void*> airVents;
-    MyClass13 password;
+    Password password;
     int cf;
-    std::vector<MyClass14> cullTree;
+    std::vector<CullTreeNode> cullTree;
     std::vector<void*> above;
     std::vector<void*> below;
     std::vector<void*> adj;
@@ -198,7 +190,7 @@ struct Building {
     std::string ceilingMatOverrideB;
     std::string wallMatOverrideB;
 };
-struct MyClass19 {
+struct GlobalTile {
     int tileID;
     Vector2 floorCoord;
     Tile globalTileCoord;
@@ -219,17 +211,17 @@ struct MyClass19 {
     bool useOptimizedFloor;
     bool useOptimizedCeiling;
 };
-struct MyClass20 {
+struct CityTile {
     std::string name;
     int blockID;
     int districtID;
     Vector2 cityCoord;
     Building building;
-    std::vector<MyClass19> outsideTiles;
+    std::vector<GlobalTile> outsideTiles;
     int density;
     int landValue;
 };
-struct MyClass21 {
+struct VisualTraits {
     int group;
     Colour skinColourRange1;
     Colour skinColourRange2;
@@ -275,16 +267,16 @@ struct MyClass21 {
     std::vector<int> culturalSimilarities;
     std::vector<Material> ethTraits;
 };
-struct MyClass22 {
+struct EthnicityTrait {
     int group;
     float ratio;
-    MyClass21 stats;
+    VisualTraits stats;
 };
-struct MyClass23 {
+struct FacialFeature {
     int feature;
     int id;
 };
-struct MyClass24 {
+struct Descriptors {
     float visualDistinctiveness;
     int build;
     int height;
@@ -292,15 +284,15 @@ struct MyClass24 {
     float weightKG;
     int shoeSize;
     int footwear;
-    std::vector<MyClass22> ethnicities;
+    std::vector<EthnicityTrait> ethnicities;
     Colour skinColour;
     int hairColourCategory;
     Colour hairColour;
     int hairType;
     int eyeColour;
-    std::vector<MyClass23> facialFeatures;
+    std::vector<FacialFeature> facialFeatures;
 };
-struct MyClass25 {
+struct Aquaintance {
     int from;
     int with;
     std::vector<int> connections;
@@ -310,20 +302,20 @@ struct MyClass25 {
     float like;
     std::vector<void*> dataKeys;
 };
-struct MyClass26 {
+struct Trait {
     int traitID;
     std::string trait;
     int reason;
     std::string date;
 };
-struct MyClass27 {
+struct Password {
     std::vector<int> digits;
     int type;
     int id;
     bool used;
     std::vector<int> notes;
 };
-struct MyClass28 {
+struct Cloth {
     std::string clothes;
     std::vector<void*> tags;
     Colour baseColor;
@@ -332,11 +324,11 @@ struct MyClass28 {
     Colour color3;
     bool borrowed;
 };
-struct MyClass29 {
+struct Outfit {
     int category;
-    std::vector<MyClass28> clothes;
+    std::vector<Cloth> clothes;
 };
-struct MyClass30 {
+struct Citizen {
     int humanID;
     int home;
     std::string debugHome;
@@ -344,7 +336,7 @@ struct MyClass30 {
     int job;
     std::string birthday;
     float societalClass;
-    MyClass24 descriptors;
+    Descriptors descriptors;
     int blood;
     std::string citizenName;
     std::string firstName;
@@ -370,9 +362,9 @@ struct MyClass30 {
     float agreeableness;
     float conscientiousness;
     float creativity;
-    std::vector<MyClass25> acquaintances;
-    std::vector<MyClass26> traits;
-    MyClass27 password;
+    std::vector<Aquaintance> acquaintances;
+    std::vector<Trait> traits;
+    Password password;
     float maxHealth;
     float recoveryRate;
     float combatSkill;
@@ -385,10 +377,10 @@ struct MyClass30 {
     std::vector<int> favItemRanks;
     std::vector<int> favCat;
     std::vector<int> favAddresses;
-    std::vector<MyClass29> outfits;
+    std::vector<Outfit> outfits;
     int favCol;
 };
-struct MyClass31 {
+struct ScreenTraits {
     Colour colour;
     float intensity;
     float flickerColourMultiplier;
@@ -397,7 +389,7 @@ struct MyClass31 {
     bool flicker;
     float range;
 };
-struct MyClass32 {
+struct Interactable {
     std::string name;
     int id;
     Tile wPos;
@@ -414,7 +406,7 @@ struct MyClass32 {
     int fsoi;
     int dp;
     MaterialKey mk;
-    MyClass31 lcd;
+    ScreenTraits lcd;
     std::string lp;
     std::string bp;
     std::string sdp;
@@ -456,9 +448,9 @@ struct MyClass32 {
     int nEvKey;
     float lhc;
     bool ft;
-    MyClass13 passcode;
+    Password passcode;
 };
-struct MyClass33 {
+struct SocialGroup {
     std::string preset;
     int id;
     float decimalStartTime;
@@ -466,16 +458,16 @@ struct MyClass33 {
     std::vector<int> members;
     int meetingPlace;
 };
-struct MyClass34 {
+struct Route {
     int w;
     std::vector<int> s;
 };
-struct MyClass35 {
+struct Pipe {
     int type;
-    std::vector<MyClass34> routes;
+    std::vector<Route> routes;
     std::vector<int> rooms;
 };
-struct MyClass36 {
+struct Criminal {
     int id;
     std::string preset;
     std::string name;
@@ -494,7 +486,7 @@ struct MyClass36 {
     float salary;
     std::string salaryString;
 };
-struct MyClass37 {
+struct PageContent {
     int page;
     std::string evID;
     int meta;
@@ -504,28 +496,28 @@ struct MyClass37 {
     std::string str;
     int order;
 };
-struct MyClass38 {
+struct Page {
     std::string id;
     int page;
-    std::vector<MyClass37> mpContent;
+    std::vector<PageContent> mpContent;
 };
-struct MyClass39 {
+struct MetaData {
     int varType;
     float value;
     std::string str;
 };
-struct MyClass40 {
+struct Meta {
     int id;
     std::string preset;
     int owner;
     int writer;
     int reciever;
     std::string dds;
-    std::vector<MyClass39> passed;
+    std::vector<MetaData> passed;
     Tile n;
     bool cd;
 };
-struct MyClass41 {
+struct City {
     std::string build;
     std::string cityName;
     std::string seed;
@@ -534,12 +526,12 @@ struct MyClass41 {
     int playersApartment;
     std::vector<District> districts;
     std::vector<Street> streets;
-    std::vector<MyClass20> cityTiles;
-    std::vector<MyClass30> citizens;
-    std::vector<MyClass32> interactables;
-    std::vector<MyClass33> groups;
-    std::vector<MyClass35> pipes;
-    std::vector<MyClass36> criminals;
-    std::vector<MyClass38> multiPage;
-    std::vector<MyClass40> metas;
+    std::vector<CityTile> cityTiles;
+    std::vector<Citizen> citizens;
+    std::vector<Interactable> interactables;
+    std::vector<SocialGroup> groups;
+    std::vector<Pipe> pipes;
+    std::vector<Criminal> criminals;
+    std::vector<Page> multiPage;
+    std::vector<Meta> metas;
 };
